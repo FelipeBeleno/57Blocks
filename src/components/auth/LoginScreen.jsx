@@ -4,14 +4,14 @@ import { Button, CardContent, InputAdornment, TextField } from '@material-ui/cor
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { useDispatch, useSelector } from 'react-redux';
-import {Login} from '../../reducers/AuthReducerDuck';
+import { Login } from '../../reducers/AuthReducerDuck';
 import poke from '../../img/pokeball.png'
 
 
 export const LoginScreen = () => {
 
   const dispatch = useDispatch()
-  const {AuthReducer} = useSelector(state => state)
+  const { AuthReducer } = useSelector(state => state)
 
 
   const [errorName, setErrorName] = useState('');
@@ -48,36 +48,45 @@ export const LoginScreen = () => {
 
     setErrorName(false);
     setErrorPass(false)
-    setGeneralError(false)
 
-    let pass = JSON.parse( localStorage.getItem("user"));
-
+    let pass = JSON.parse(localStorage.getItem("user"));
 
 
-    if(formValues.username.length >= 3){
-      
+
+    if (formValues.username.length >= 3) {
+
       setErrorName(true);
 
     }
-    
-    if(formValues.password.length >= 3){
+
+    if (formValues.password.length >= 3) {
 
       setErrorPass(true)
+    }
 
+    if (errorName == true || errorName === true) {
+
+      return;
 
     }
-    
-    if(pass.user !== formValues.username || pass.pass !== formValues.password){
+
+
+
+
+
+    if (pass.user !== formValues.username || pass.pass !== formValues.password) {
       setGeneralError(true);
-      
-    }else{
+
+    } else {
 
 
-      
-          const dataForm = formValues
-          dispatch(Login(dataForm));
+
+      const dataForm = formValues
+      dispatch(Login(dataForm));
 
     }
+
+
 
   }
 
@@ -86,7 +95,7 @@ export const LoginScreen = () => {
     <Fragment>
       <div className="containerf">
         <div className="prtd">
-        
+
         </div>
 
         <div className="prti">
@@ -94,15 +103,15 @@ export const LoginScreen = () => {
             <CardContent>
               <div className="titleCard">
                 <h1>Poke Api</h1>
-                <img src={poke} className="imgPoke" alt=""/>
+                <img src={poke} className="imgPoke" alt="" />
               </div>
               <br />
               <TextField className="inp"
-                id="username" label="Username" name="username" onChange={e => cambioForm(e)} 
-                
+                id="username" label="Username" name="username" onChange={e => cambioForm(e)}
+
                 value={formValues.username}
-                />
-                <span style={{color:'red'}} >{errorName === false && 'minimum three characters'}</span>
+              />
+              <span style={{ color: 'red' }} >{errorName === false && 'minimum three characters'}</span>
               <br />
               <br />
 
@@ -130,12 +139,12 @@ export const LoginScreen = () => {
                 className="inp"
                 value={formValues.password}
               />
-                <span style={{color:'red'}} >{errorPass === false && 'minimum three characters'}</span>
+              <span style={{ color: 'red' }} >{errorPass === false && 'minimum three characters'}</span>
 
               <br />
-              <span style={{color:'red'}} >{generalError !== false && 'Is invalid name or password'}</span>
+              <span style={{ color: 'red' }} >{generalError !== false && 'Is invalid name or password'}</span>
               <br />
-              <Button color="primary" variant="contained" style={{ width: '100%', color:'white' }} onClick={handleSubmit}>log in</Button>
+              <Button color="primary" variant="contained" style={{ width: '100%', color: 'white' }} onClick={handleSubmit}>log in</Button>
             </CardContent>
 
 
