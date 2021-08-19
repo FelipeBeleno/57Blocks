@@ -78,6 +78,7 @@ export const Footer = () => {
 
         <BottomNavigationAction label="Logout"
           onClick={() => {
+            localStorage.removeItem('value');
             dispatch(Logout());
 
           }}

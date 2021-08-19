@@ -14,10 +14,10 @@ export const LoginScreen = () => {
   const {AuthReducer} = useSelector(state => state)
 
 
-  useEffect(() => {
-    
+  const [errorName, setErrorName] = useState('');
+  const [errorPass, setErrorPass] = useState('');
+  const [generalError, setGeneralError] = useState(false);
 
-  }, [])
 
 
 
@@ -43,8 +43,41 @@ export const LoginScreen = () => {
 
 
   const handleSubmit = () => {
-    const dataForm = formValues
-    dispatch(Login(dataForm));
+
+
+
+    setErrorName(false);
+    setErrorPass(false)
+    setGeneralError(false)
+
+    let pass = JSON.parse( localStorage.getItem("user"));
+
+
+
+    if(formValues.username.length >= 3){
+      
+      setErrorName(true);
+
+    }
+    
+    if(formValues.password.length >= 3){
+
+      setErrorPass(true)
+
+
+    }
+    
+    if(pass.user !== formValues.username || pass.pass !== formValues.password){
+      setGeneralError(true);
+      
+    }else{
+
+
+      
+          const dataForm = formValues
+          dispatch(Login(dataForm));
+
+    }
 
   }
 
@@ -69,6 +102,7 @@ export const LoginScreen = () => {
                 
                 value={formValues.username}
                 />
+                <span style={{color:'red'}} >{errorName === false && 'minimum three characters'}</span>
               <br />
               <br />
 
@@ -96,8 +130,10 @@ export const LoginScreen = () => {
                 className="inp"
                 value={formValues.password}
               />
+                <span style={{color:'red'}} >{errorPass === false && 'minimum three characters'}</span>
 
               <br />
+              <span style={{color:'red'}} >{generalError !== false && 'Is invalid name or password'}</span>
               <br />
               <Button color="primary" variant="contained" style={{ width: '100%', color:'white' }} onClick={handleSubmit}>log in</Button>
             </CardContent>
